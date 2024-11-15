@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+</head>
+<body>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Company Name</th>
+          <th>Job Role</th>
+          <th>Job Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each interviews}}
+        <tr>
+          <td> {{@index}} </td>
+          <td> {{this.company_name}} </td>
+          <td> {{this.job_role}} </td>
+          <td> {{this.job_type}} </td>
+        </tr>
+        {{/each}}
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

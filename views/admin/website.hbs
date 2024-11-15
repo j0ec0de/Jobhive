@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Placement Details</title>
+    <link rel="stylesheet" href="/css/website.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Add Placement Details</h2>
+            <form id="addPlacementForm">
+                <div>
+                    <label for="year">Year:</label>
+                    <input type="number" id="year" name="year" required>
+                </div>
+                <div>
+                    <label for="company">Company:</label>
+                    <input type="text" id="company" name="company_name" required>
+                </div>
+                <div>
+                    <label for="salary">Salary:</label>
+                    <input type="number" id="salary" name="salary" required>
+                </div>
+                <div>
+                    <label for="jobRole">Job Role:</label>
+                    <input type="text" id="jobRole" name="job_role" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // AJAX Request
+        $(document).ready(function() {
+            $('#addPlacementForm').on('submit', function(e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                $.ajax({
+                    url: '/auth/website',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        alert(response.message);
+                        fetchPlacements(); // Refresh placement list
+                        $('#addPlacementForm')[0].reset(); // Reset form
+                    },
+                    error: function(err) {
+                        console.log('Error adding placement:', err);
+                    }
+                });
+            });
+
+            function fetchPlacements() {
+                $.ajax({
+                    url: '/auth/viewPlacements' + $('#year').val(),
+                    method: 'GET',
+                    success: function(data) {
+                        const placementsContainer = $('#placementsContainer');
+                        placementsContainer.empty(); // Clear existing placements
+                        if (data && data.length > 0) {
+                            data.forEach(placement => {
+                                const placementHtml = `
+                                    <div class="card">
+                                        <p><strong>Company:</strong> ${placement.company_name}</p>
+                                        <p><strong>Salary:</strong> ${placement.salary}</p>
+                                        <p><strong>Job Role:</strong> ${placement.job_role}</p>
+                                    </div>
+                                `;
+                                placementsContainer.append(placementHtml);
+                            });
+                        } else {
+                            placementsContainer.html('<div>No placements found for this year</div>');
+                        }
+                    },
+                    error: function(err) {
+                        console.log('Error fetching placements:', err);
+                    }
+                });
+            }
+
+            // Initial fetch on page load
+            fetchPlacements();
+        });
+
+    </script>
+
+</body>
+</html>

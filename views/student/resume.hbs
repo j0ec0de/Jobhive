@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="/css/resume.css">
+</head>
+<body>
+<a href="/dashboard"><button class="button-2" role="button" style="margin: auto;">Back</button></a>
+    <div class="resume-container" id="resume">
+        <div class="header">
+            <div class="left">
+                <h1 id="name">Your Name</h1>
+                <p id="contact-info">Your Contact Info</p>
+                <p id="email">Email: example@example.com</p>
+                <p id="phone">Phone: 123-456-7890</p>
+                <p id="address">Address: Your Address</p>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Experience</h2>
+            <div id="experience">
+                <!-- Experience entries will be added here -->
+            </div>
+        </div>
+        <div class="section">
+            <h2>Education</h2>
+            <div id="education">
+                <!-- Education entries will be added here -->
+            </div>
+        </div>
+        <div class="section">
+            <h2>Skills</h2>
+            <ul id="skills">
+                <!-- Skills will be added here -->
+            </ul>
+        </div>
+    </div>
+    <form id="resume-form">
+        <h3>Enter Your Information</h3>
+        <label for="name-input">Name:</label>
+        <input type="text" id="name-input"><br>
+        <label for="contact-info-input">Contact Info:</label>
+        <input type="text" id="contact-info-input"><br>
+        <label for="email-input">Email:</label>
+        <input type="email" id="email-input"><br>
+        <label for="phone-input">Phone:</label>
+        <input type="tel" id="phone-input"><br>
+        <label for="address-input">Address:</label>
+        <input type="text" id="address-input"><br>
+        <h3>Experience</h3>
+        <label for="experience-input">Experience:</label>
+        <textarea id="experience-input"></textarea><br>
+        <h3>Education</h3>
+        <label for="education-input">Education:</label>
+        <textarea id="education-input"></textarea><br>
+        <h3>Skills</h3>
+        <label for="skills-input">Skills (comma separated):</label>
+        <input type="text" id="skills-input"><br>
+        <button type="button" onclick="generateResume()">Generate Resume</button>
+        <button type="button" onclick="downloadPDF()">Download as PDF</button>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="js/scriptresume.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mock.css">
+    <title>Mock</title>
+</head>
+<body>
+    <div class="btn">
+        <a href="/admindash"><button class="button-2" role="button" style="margin: auto;">Back</button></a>
+    </div>
+    <div class="card">
+        <h2>Mock Test</h2>
+        <p>
+            <li>Each mock test should be provided with 20 questions and the options can be given accordingly.</li>
+            <li>Four options are to be given for each question</li>
+            <li>The answer for each question should also be given correctly.</li>
+        </p>
+    </div>
+    <div class="page-container">
+        <div class="card" id="mock-card">
+            <h2>Mock Test</h2>
+            <div class="container">
+                <form id="addQuestionForm">
+                    <div class="question-block">
+                        <label for="number">Number :</label>
+                        <input type="text" id="number" name="number" required>
+                        <label for="question1">Question :</label>
+                        <input type="text" id="question" name="question" required>
+                        <div class="options">
+                            <label>Option 1:</label>
+                            <input type="text" name="option1" required>
+                            <label>Option 2:</label>
+                            <input type="text" name="option2" required>
+                            <label>Option 3:</label>
+                            <input type="text" name="option3" required>
+                            <label>Option 4:</label>
+                            <input type="text" name="option4" required>
+                        </div>
+                        <label for="answer">Answer:</label>
+                        <input type="text" id="answer" name="answer" required>
+                    </div>
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+        </div>
+        <div class="card-m">
+            <div class="outer-card" id="cardsContainer">
+                <!-- Existing questions will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        // Fetch and display existing questions
+        function fetchQuestions() {
+            $.ajax({
+            url: '/auth/viewQuestions',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                const cardsContainer = $('#cardsContainer');
+                cardsContainer.empty();
+                if (data && data.length > 0) {
+                data.forEach(question => {
+                    const cardHtml = `
+                    <div class="card" id="card-view">
+                        <div class="field">
+                        <label for="number">Number:</label>
+                        <input type="text" id="number" name="number" value="${question.number}" readonly>
+                        </div>
+                        <div class="field">
+                        <label for="question">Question:</label>
+                        <input type="text" id="question" name="question" value="${question.question}" readonly>
+                        </div>
+                        <div class="field">
+                        <label for="option1">Option 1:</label>
+                        <input type="text" id="option1" name="option1" value="${question.option1}" readonly>
+                        </div>
+                        <div class="field">
+                        <label for="option2">Option 2:</label>
+                        <input type="text" id="option2" name="option2" value="${question.option2}" readonly>
+                        </div>
+                        <div class="field">
+                        <label for="option3">Option 3:</label>
+                        <input type="text" id="option3" name="option3" value="${question.option3}" readonly>
+                        </div>
+                        <div class="field">
+                        <label for="option4">Option 4:</label>
+                        <input type="text" id="option4" name="option4" value="${question.option4}" readonly>
+                        </div>
+                        <div class="field">
+                        <label for="answer">Answer:</label>
+                        <input type="text" id="answer" name="answer" value="${question.answer}" readonly>
+                        </div>
+                        <button class="delete-button" data-id="${question.id}">Delete</button>
+                    </div>
+                    `;
+                    cardsContainer.append(cardHtml);
+                });
+
+                // Attach event listener to delete buttons
+                $('.delete-button').on('click', function() {
+                    const questionId = $(this).data('id');
+                    deleteQuestion(questionId);
+                });
+                } else {
+                cardsContainer.html('<div>No data found</div>');
+                }
+            },
+            error: function(err) {
+                console.log('Error fetching questions:', err);
+            }
+            });
+        }
+
+        // Function to delete a question
+        function deleteQuestion(id) {
+            $.ajax({
+            url: `/auth/deleteQuestion/${id}`,
+            method: 'DELETE',
+            success: function(response) {
+                alert(response.message);
+                fetchQuestions(); // Refresh the questions list
+            },
+            error: function(err) {
+                console.log('Error deleting question:', err);
+            }
+            });
+        }
+
+        // Initial fetch
+        fetchQuestions();
+
+        // Handle form submission
+        $('#addQuestionForm').on('submit', function(e) {
+            e.preventDefault();
+            const formData = $(this).serialize();
+            $.ajax({
+            url: '/auth/mock',
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                alert(response.message);
+                fetchQuestions(); // Refresh the questions list
+            },
+            error: function(err) {
+                console.log('Error adding question:', err);
+            }
+            });
+        });
+        });
+
+    </script>
+</body>
+</html>

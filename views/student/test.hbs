@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/test.css">
+    <title>Mock Test</title>
+</head>
+<body>
+    <h1>Mock Test</h1>
+    <a href="/dashboard"><button class="button-2" role="button" style="margin: auto;">Back</button></a>
+    <div class="container">
+        <form id="submitForm">
+            {{#each test}}
+            <div class="question">
+                <p><strong>Question {{this.number}}:</strong> {{this.question}}</p>
+                <p><strong>Options:</strong></p>
+                <ul>
+                    <li><label><input type="checkbox" name="question{{this.number}}[]" value="{{this.option1}}"> {{this.option1}}</label></li>
+                    <li><label><input type="checkbox" name="question{{this.number}}[]" value="{{this.option2}}"> {{this.option2}}</label></li>
+                    <li><label><input type="checkbox" name="question{{this.number}}[]" value="{{this.option3}}"> {{this.option3}}</label></li>
+                    <li><label><input type="checkbox" name="question{{this.number}}[]" value="{{this.option4}}"> {{this.option4}}</label></li>
+                </ul>
+            </div>
+            {{/each}}
+            <input type="submit" value="Submit">
+        </form>
+        <div id="scoreDisplay" style="display: none;">
+            <h2>Your Score: <span id="score"></span></h2>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#submitForm').on('submit', function(e) {
+                e.preventDefault();
+
+                const formData = $(this).serializeArray();
+                const questions = [];
+
+                // Initialize an empty object to keep track of questions
+                const questionData = {};
+
+                // Group the form data by question ID
+                formData.forEach(item => {
+                    const matches = item.name.match(/^question(\d+)\[\]$/);
+                    if (matches) {
+                        const questionId = matches[1];
+                        if (!questionData[questionId]) {
+                            questionData[questionId] = {
+                                questionId,
+                                selectedOptions: []
+                            };
+                        }
+                        questionData[questionId].selectedOptions.push(item.value);
+                    }
+                });
+
+                // Convert the object to an array
+                for (const key in questionData) {
+                    if (questionData.hasOwnProperty(key)) {
+                        questions.push(questionData[key]);
+                    }
+                }
+
+                $.ajax({
+                    url: '/auth/submit',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ questions }),
+                    success: function(response) {
+                        $('#score').text(response.score);
+                        $('#scoreDisplay').show();
+                    },
+                    error: function(err) {
+                        console.log('Error calculating score:', err);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

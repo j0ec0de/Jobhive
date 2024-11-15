@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mock.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Mock</title>
+</head>
+<body>
+    <div class="btn">
+        <a href="/admindash"><button class="button-2" role="button" style="margin: auto;">Back</button></a>
+    </div>
+    <div class="card">
+        <h2>Mock Test</h2>
+            <p>
+                <li>Each mock test should be provided with 20 questions and the options can be given accordingly.</li>
+                <li>Four options are to be given for each question</li>
+                <li>The answer for each questions should also be given correctly.</li>
+            </p>
+    </div>
+        <div class="card" id="mock-card">
+            <h2>Mock Test</h2>
+                <div class="container">
+                    <form action="/auth/mock" method="POST">
+                        <!-- Repeat this block for each question -->
+                        <div class="question-block">
+                            <label for="question1">Number :</label>
+                            <input type="number" id="question1" name="number" required>
+                            <label for="question1">Question :</label>
+                            <input type="text" id="question1" name="question" required>
+                            <div class="options">
+                                <label>Option 1:</label>
+                                <input type="text" name="option1" required>
+                                <label>Option 2:</label>
+                                <input type="text" name="option2" required>
+                                <label>Option 3:</label>
+                                <input type="text" name="option3" required>
+                                <label>Option 4:</label>
+                                <input type="text" name="option4" required>
+                            </div>
+                            <label for="answer1">Answer:</label>
+                            <input type="text" id="answer" name="answer" required>
+                        </div>
+                        <button type="submit">Add</button>
+                    </form>
+                </div>
+        </div>
+
+    <div class="card-m">
+        {{#if mockDet}}    
+            <div class="card" id="card-view">
+                {{#each mockDet}}
+                    <div class="card">
+                        <div class="field">
+                            <label for="number">Number:</label>
+                            <input type="number" id="number" name="number" value="{{number}}">
+                        </div>
+                        <div class="field">
+                            <label for="question">Question:</label>
+                            <input type="text" id="question" name="question" value="{{question}}">
+                        </div>
+                        <div class="field">
+                            <label for="option1">Option 1:</label>
+                            <input type="text" id="option1" name="option1" value="{{option1}}">
+                        </div>
+                        <div class="field">
+                            <label for="option2">Option 2:</label>
+                            <input type="text" id="option2" name="option2" value="{{option2}}">
+                        </div>
+                        <div class="field">
+                            <label for="option3">Option 3:</label>
+                            <input type="text" id="option3" name="option3" value="{{option3}}">
+                        </div>
+                        <div class="field">
+                            <label for="option4">Option 4:</label>
+                            <input type="text" id="option4" name="option4" value="{{option4}}">
+                        </div>
+                        <div class="field">
+                            <label for="answer">Answer:</label>
+                            <input type="text" id="answer" name="answer" value="{{answer}}">
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+    </div>
+
+</body>
+</html>
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content:baseline;
+    align-items:center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    padding-top: 20px;
+    flex-direction: column;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 700px;
+    text-align:left;
+    flex-direction: column;
+}
+
+.card h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.card p {
+    font-size: 16px;
+    color: #666;
+}
+
+.btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+#add {
+    margin: 20px;
+}
+
+.add-icon {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question-block {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.question-block:last-child {
+    border-bottom: none;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.options {
+    margin-bottom: 10px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#mock-card {
+    margin-top: 20px;
+    width: 100%;
+    align-self:normal;
+}
+
+#card-view {
+    width: 100%;
+    align-self: flex-end;
+    margin-top: -650px;
+    
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.field input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.field input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-m{
+    height: 650px;
+    width: 700px;
+    position:fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 60px;
+    margin-top: 20px;
+    margin-inline-start: 400px;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.2px);
+    -webkit-backdrop-filter: blur(3.2px);
+    border: 1px solid rgba(0, 0, 0, 0.39);
+  
+  }
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mock.css">
+    <title>Mock</title>
+</head>
+<body>
+    <div class="btn">
+        <a href="/admindash"><button class="button-2" role="button" style="margin: auto;">Back</button></a>
+    </div>
+    <div class="card">
+        <h2>Mock Test</h2>
+        <p>
+            <li>Each mock test should be provided with 20 questions and the options can be given accordingly.</li>
+            <li>Four options are to be given for each question</li>
+            <li>The answer for each questions should also be given correctly.</li>
+        </p>
+    </div>
+    <div class="page-container">
+        <div class="card" id="mock-card">
+            <h2>Mock Test</h2>
+            <div class="container">
+                <form action="/auth/mock" method="POST">
+                    <div class="question-block">
+                        <label for="question1">Number :</label>
+                        <input type="number" id="question1" name="number" required>
+                        <label for="question1">Question :</label>
+                        <input type="text" id="question1" name="question" required>
+                        <div class="options">
+                            <label>Option 1:</label>
+                            <input type="text" name="option1" required>
+                            <label>Option 2:</label>
+                            <input type="text" name="option2" required>
+                            <label>Option 3:</label>
+                            <input type="text" name="option3" required>
+                            <label>Option 4:</label>
+                            <input type="text" name="option4" required>
+                        </div>
+                        <label for="answer1">Answer:</label>
+                        <input type="text" id="answer" name="answer" required>
+                    </div>
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+        </div>
+        <div class="card-m">
+            <div class="outer-card">
+                {{#if mockDet}}
+                    <div class="cards-container">
+                        {{#each mockDet}}
+                            <div class="card" id="card-view">
+                                <div class="field">
+                                    <label for="number">Number:</label>
+                                    <input type="number" id="number" name="number" value="{{this.number}}" readonly>
+                                </div>
+                                <div class="field">
+                                    <label for="question">Question:</label>
+                                    <input type="text" id="question" name="question" value="{{this.question}}" readonly>
+                                </div>
+                                <div class="field">
+                                    <label for="option1">Option 1:</label>
+                                    <input type="text" id="option1" name="option1" value="{{this.option1}}" readonly>
+                                </div>
+                                <div class="field">
+                                    <label for="option2">Option 2:</label>
+                                    <input type="text" id="option2" name="option2" value="{{this.option2}}" readonly>
+                                </div>
+                                <div class="field">
+                                    <label for="option3">Option 3:</label>
+                                    <input type="text" id="option3" name="option3" value="{{this.option3}}" readonly>
+                                </div>
+                                <div class="field">
+                                    <label for="option4">Option 4:</label>
+                                    <input type="text" id="option4" name="option4" value="{{this.option4}}" readonly>
+                                </div>
+                                <div class="field">
+                                    <label for="answer">Answer:</label>
+                                    <input type="text" id="answer" name="answer" value="{{this.answer}}" readonly>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                {{else}}
+                    <div>No data found</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+exports.addQuestions = async(req,res,next)=>{
+  try{
+    const {number ,question , option1 , option2 , option3 , option4 , answer} = req.body;
+    const mockDetails = {
+      number,
+      question,
+      option1,
+      option2,
+      option3,
+      option4,
+      answer
+    }
+
+    db.query('INSERT INTO mocktest SET?',mockDetails,(error,result)=>{
+      if(error){
+        console.log(error);
+        return next();
+      }
+      res.status(200).render('admin/mock',{
+        message: 'Question Added '
+      })
+
+    });
+  } catch(error){
+    console.log(error);
+    return next();
+  }
+}
+
+
+//to view the added questions and to change the values 
+exports.viewQuestions = async (req, res, next) => {
+  try {
+      db.query('SELECT * FROM mocktest', (error, result) => {
+        if (error) {
+          console.log(error);
+          return next();
+        }
+
+        req.mockDet = result;
+        console.log("Interview details are:");
+        console.log(req.mockDet);
+        return next();
+
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+

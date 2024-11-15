@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Placements</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label, button {
+            margin-right: 10px;
+        }
+        select, button {
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>View Placements</h1>
+    
+    <label for="year">Select Year:</label>
+    <select id="year">
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+    </select>
+    
+    <button onclick="fetchPlacements()">View</button>
+    
+    <table id="placementsTable">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Job Role</th>
+                <th>Salary</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="placementsBody">
+            <!-- Placement details will be displayed here -->
+        </tbody>
+    </table>
+    
+    <script>
+        function fetchPlacements() {
+            const year = document.getElementById('year').value;
+            fetch(`/auth/viewPlacements?year=${year}`)
+                .then(response => response.json())
+                .then(data => {
+                    const placementsBody = document.getElementById('placementsBody');
+                    placementsBody.innerHTML = '';
+                    
+                    data.forEach(placement => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${placement.company_name}</td>
+                            <td>${placement.job_role}</td>
+                            <td>${placement.salary}</td>
+                            <td>${placement.date}</td>
+                        `;
+                        placementsBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching placements:', error));
+        }
+    </script>
+</body>
+</html>

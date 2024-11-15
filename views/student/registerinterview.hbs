@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Form</title>
+  <link rel="stylesheet" href="/css/registerinterview.css">
+</head>
+<body>
+
+  <div class="form-container">
+    <a href="/dashboard"><button class="button-41" role="button">Back</button></a>
+    <h1>Interview Registration Form</h1>
+    <form action="/auth/registerinterview" method="POST" enctype="multipart/form-data">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="job_role">Interview no:</label>
+      <input type="number" id="jobrole" name="user_id" required>
+
+      <label for="resume">Resume:</label>
+      <input type="file" id="resume" name="resume" accept=".pdf">
+
+      <button type="submit">Submit</button>
+    </form>
+    {{#if message}}
+      {{message}}
+    {{/if}}
+
+
+  </div>
+</body>
+</html>

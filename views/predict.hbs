@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Prediction</title>
+    <link rel="stylesheet" href="/css/predict.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="/js/predict.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Placement Prediction Form</h1>
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="internships">Internships:</label>
+                <input type="number" id="internships" name="internships" required>
+            </div>
+            <div class="form-group">
+                <label for="cgpa">CGPA:</label>
+                <input type="number" step="0.01" id="cgpa" name="cgpa" required>
+            </div>
+            <div class="form-group">
+                <label for="backlogs">Backlogs:</label>
+                <input type="number" id="backlogs" name="backlogs" required>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+        <h2 id="result"></h2>
+    </div>
+</body>
+</html>

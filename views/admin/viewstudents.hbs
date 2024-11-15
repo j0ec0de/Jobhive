@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>View Students</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
+  <link rel="stylesheet" href="/css/admindash.css">
+    <link rel="shortcut icon" href="images/iconjob.png" title="Favicon"/>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="nav-bar">
+  <input id="nav-toggle" type="checkbox"/>
+  <div id="nav-header"><a id="nav-title" href="/admindash">ADMIN</a>
+    <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+    <hr/>
+  </div>
+  <div id="nav-content">
+    <a href="/admindash"><div class="nav-button"><i class="fas fa-palette"></i><span>Dashboard</span></div></a>
+    <div class="nav-button"><i class="fas fa-images"></i><span>Website</span></div>
+    <hr/>
+    <a href="/mock"><div class="nav-button"><i class="fas fa-heart"></i><span>Mock</span></div></a>
+    <hr/>
+    <div id="nav-content-highlight"></div>
+  </div>
+  <input id="nav-footer-toggle" type="checkbox"/>
+  <div id="nav-footer">
+    <div id="nav-footer-heading">
+      <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+      <div id="nav-footer-titlebox"><a id="nav-footer-title" href=" " target="_blank"> {{user.name}} </a><span id="nav-footer-subtitle"> {{user.email}} </span></div>
+      <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+    </div>
+    <div id="nav-footer-content">
+      <a href="/auth/logout"><button class="button-1" role="button" id="btn-2">logout</button></a>
+    </div>
+  </div>
+</div>
+
+
+{{#if students}}
+    <div class="card-m">
+    <div class="btn">
+        <a href="/admindash"><button class="btn" role="button" style="margin: auto;">Back</button></a>
+    </div>
+
+      </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Remove User</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each students}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{email}}</td>
+                    <td>                        
+                      <form method="POST" action="/auth/viewstudents/{{id}}?_method=DELETE">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button class="button-33" type="submit" role="button">Remove</button>
+                      </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{else}}
+    <p>{{message}}</p>
+{{/if}}
+
+
+
+
+</body>
+</html>
